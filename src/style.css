@@ -1,0 +1,71 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  /* container */
+  .container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  h3, h4 {
+    margin: 0px 0px 5px 0px;
+  }
+  
+  /* tv show list */
+  
+  .tvshow-list {
+    width: 250px;
+    min-width: 250px;
+    margin-right: 20px;
+  }
+  
+  .tvshow-list .item {
+        width: 100%;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      cursor: pointer;
+  }
+  
+  .tvshow-list .item:hover .name{
+    color: orange;
+  }
+  
+  .tvshow-list .item .name {
+      font-size: 18px;
+      font-weight: bold;
+      flex-grow: 1;
+  }
+  
+  .tvshow-list .item .score {
+      background-color: greenyellow;
+      color: #000;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 2px;
+  }
+  
+  .tvshow-details .details {
+    padding-right: 10px;
+  }
+  
+  /* comments */
+  
+  .comments {
+    background-color: #f1f1e4;
+    padding: 9px;
+  }
+  
+  .comment {
+    margin-bottom: 10px;
+  }
