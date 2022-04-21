@@ -30,9 +30,10 @@ export function TestAutomaticBatching(props) {
 }
 
 export function TestDeferredForConcurrent(props) {
-  console.log("TestTransitionForConcurrent re-render");
   const [value, setValue] = useState("");
   const deferredValue = useDeferredValue(value);
+  console.log("TestDeferredForConcurrent re-render");
+  console.log(`value: ${value} / deferredvalue: ${deferredValue}`);
 
   const onChange = e => {
     setValue(e.target.value);
@@ -48,7 +49,7 @@ export function TestDeferredForConcurrent(props) {
 }
 
 export function TestDeferredForOld(props) {
-  console.log("TestTransitionForOld re-render");
+  console.log("TestDeferredForOld re-render");
   const [value, setValue] = useState("");
 
   const onChange = e => {
@@ -60,6 +61,52 @@ export function TestDeferredForOld(props) {
       <h1>{props.caption}</h1>
       <input value={value} onChange={onChange} />
       <Grid value={value} />
+    </div>
+  );
+}
+
+export function TestTransitionForConcurrent(props) {
+  const [value, setValue] = useState("");
+  const [gridValue, setGridValue] = useState("");
+  const [isPending, startTransition] = useTransition();
+  console.log("TestTransitionForConcurrent re-render");
+  console.log(`value: ${value} / gridValue ${gridValue}`);
+
+  const onChange = e => {
+    setValue(e.target.value);
+    startTransition(() => {
+      setGridValue(() => {
+        debugger;
+        return e.target.value;
+      });
+    });
+  };
+
+  return (
+    <div className="App">
+      <h1>{props.caption}</h1>
+      {isPending && <div>Updating...</div>}
+      <input value={value} onChange={onChange} />
+      <Grid value={gridValue} />
+    </div>
+  );
+}
+
+export function TestTransitionForOld(props) {
+  console.log("TestTransitionForOld re-render");
+  const [value, setValue] = useState("");
+  const [gridValue, setGridValue] = useState("");
+
+  const onChange = e => {
+    setValue(e.target.value);
+    setGridValue(e.target.value);
+  };
+
+  return (
+    <div className="App">
+      <h1>{props.caption}</h1>
+      <input value={value} onChange={onChange} />
+      <Grid value={gridValue} />
     </div>
   );
 }
