@@ -1,8 +1,7 @@
-import React, { useState, useDeferredValue, Suspense, useTransition, startTransition } from "react";
+import React, { useState, useDeferredValue, Suspense, useTransition, startTransition, useEffect } from "react";
 import "./style.css";
+import { getTvMetadataResource, tvMetadataApi } from "./Suspense/helpers/Api";
 import { Spinner } from "./Suspense/Spinner";
-import { TvShowDetails } from "./Suspense/TvShowDetails";
-import { TvShowList } from "./Suspense/TvShowList";
 export function TestAutomaticBatching(props) {
   console.log("render");
   const [count, setCount] = useState(1);
@@ -110,33 +109,45 @@ export function TestTransitionForOld(props) {
     </div>
   );
 }
-// export default function App(props) {
-//   const [id, setId] = useState(1);
-//   const [isPending, startTransition] = useTransition({
-//     timeoutMs: 3000,
-//   });
 
-//   const onClick = id => {
-//     startTransition(() => {
-//       console.log("transition");
-//       setId(id);
-//     });
-//   };
+export function TestSuspend(props) {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <TvShowList />
+    </Suspense>
+  );
+}
 
-//   return (
-//     <div className="container">
-//       <h1>Top 10 TV Shows of All Time {isPending && "(loading)"}</h1>
-//       <div className="flex">
-//         <Suspense fallback={<Spinner />}>
-//           <TvShowList onClick={onClick} />
-//         </Suspense>
-//         <Suspense fallback={<Spinner />}>
-//           <TvShowDetails id={id} />
-//         </Suspense>
-//       </div>
-//     </div>
-//   );
-// }
+function TvShowList() {
+  const tvMetadata = getTvMetadataResource().read();
+  const tvshows = tvMetadata.map(item => (
+    <div className="item" key={item.id}>
+      <div className="name">{item.name}</div>
+      <div className="score">{item.score}</div>
+    </div>
+  ));
+  return <div className="tvshow-list">{tvshows}</div>;
+}
+
+export function TestNoSuspend(props) {
+  const [tvMetadata, setTvMetadata] = useState(null);
+
+  useEffect(() => {
+    tvMetadataApi().then(value => {
+      setTvMetadata(value);
+    });
+  }, []);
+
+  if (tvMetadata === null) return <Spinner />;
+
+  const tvshows = tvMetadata.map(item => (
+    <div className="item" key={item.id}>
+      <div className="name">{item.name}</div>
+      <div className="score">{item.score}</div>
+    </div>
+  ));
+  return <div className="tvshow-list">{tvshows}</div>;
+}
 
 const BOARD_SIZE = 150;
 
@@ -184,23 +195,3 @@ const Grid = React.memo(({ value }) => {
     </div>
   );
 });
-
-const ConcurrentTest = props => {
-  const [value, setValue] = useState("");
-
-  const deferredValue = useDeferredValue(value, {
-    timeoutMs: 500,
-  });
-
-  const keyPressHandler = e => {
-    setValue(e.target.value);
-  };
-
-  return (
-    <div className="App">
-      <h1>{props.caption}</h1>
-      <input onKeyUp={keyPressHandler} />
-      <Grid value={deferredValue} />
-    </div>
-  );
-};
