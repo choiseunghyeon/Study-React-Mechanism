@@ -39,4 +39,4 @@ export function TestDeferredForConcurrent(props) {
 - beginWork
   - renderWithHooks
     - React Element 새로 만드는 함수
-    - didScheduleRenderPhaseUpdateDuringThisPass로 Component 업데이트 중 발생하는 State Update 처리하는 듯
+    - render phase 중 state update가 발생하는 경우 바로 컴포넌트를 실행한다. / didScheduleRenderPhaseUpdateDuringThisPass로 Component 업데이트 중 발생하는 State Update 확인

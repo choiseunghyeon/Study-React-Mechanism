@@ -2,6 +2,37 @@ import React, { useState, useDeferredValue, Suspense, useTransition, startTransi
 import "./style.css";
 import { getTvMetadataResource, tvMetadataApi } from "./Suspense/helpers/Api";
 import { Spinner } from "./Suspense/Spinner";
+
+export function TestUpdateComponentWhenRenderPhase(props) {
+  console.log("render");
+  const [count, setCount] = useState(1);
+
+  const onClick = id => {
+    setCount(prevCount => {
+      return prevCount + 1;
+    });
+  };
+
+  if (count === 2) {
+    setCount(prevCount => {
+      return prevCount + 1;
+    });
+  }
+
+  if (count === 3) {
+    setCount(prevCount => {
+      return prevCount + 1;
+    });
+  }
+
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={onClick}>증가</button>
+    </div>
+  );
+}
+
 export function TestAutomaticBatching(props) {
   console.log("render");
   const [count, setCount] = useState(1);

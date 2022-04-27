@@ -2,7 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import OldReactDOM from "react-dom";
 import "./index.css";
-import { TestAutomaticBatching, TestDeferredForOld, TestDeferredForConcurrent, TestTransitionForOld, TestTransitionForConcurrent, TestSuspend, TestNoSuspend } from "./App";
+import {
+  TestAutomaticBatching,
+  TestDeferredForOld,
+  TestDeferredForConcurrent,
+  TestTransitionForOld,
+  TestTransitionForConcurrent,
+  TestSuspend,
+  TestNoSuspend,
+  TestUpdateComponentWhenRenderPhase,
+} from "./App";
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
 //   <React.StrictMode>
@@ -25,6 +34,7 @@ OldReactDOM.render(<TestDeferredForOld />, rootElement);
 // Concurrent Mode
 const rootElementConcurrent = document.getElementById("root-concurrent");
 // ReactDOM.createRoot(rootElementConcurrent).render(<TestAutomaticBatching />);
-ReactDOM.createRoot(rootElementConcurrent).render(<TestDeferredForConcurrent />);
+// ReactDOM.createRoot(rootElementConcurrent).render(<TestDeferredForConcurrent />);
 // ReactDOM.createRoot(rootElementConcurrent).render(<TestTransitionForConcurrent />);
 // ReactDOM.createRoot(rootElementConcurrent).render(<TestSuspend />);
+ReactDOM.createRoot(rootElementConcurrent).render(<TestUpdateComponentWhenRenderPhase />);
