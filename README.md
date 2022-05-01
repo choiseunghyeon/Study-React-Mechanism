@@ -40,3 +40,10 @@ export function TestDeferredForConcurrent(props) {
   - renderWithHooks
     - React Element 새로 만드는 함수
     - render phase 중 state update가 발생하는 경우 바로 컴포넌트를 실행한다. / didScheduleRenderPhaseUpdateDuringThisPass로 Component 업데이트 중 발생하는 State Update 확인
+
+## Fiber
+
+- Fiber(work)의 Type에 따라 수행되는 작업이 다르다 (ReactWorkTags.js 에서 Type 종류 확인 가능)
+- render Tree에 있는 Fiber는 재귀적으로 순회하지 않는다.
+  - 재귀적으로 처리하는 경우 중간에 멈출 수 없어 동기적으로 처리 된다.
+  - https://indepth.dev/posts/1007/the-how-and-why-on-reacts-usage-of-linked-list-in-fiber-to-walk-the-components-tree#linked-list-traversal
